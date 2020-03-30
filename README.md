@@ -11,7 +11,7 @@
   }
 
 #### response if success || response 200
-  {
+>  {
     "result": {
       "id": 34,
       "title": "test title",
@@ -23,7 +23,7 @@
     }
   }
 #### response if no data on request || response 400
-  {
+>  {
     "errors": [
       {
         "message": "title tidak boleh kosong",
@@ -90,7 +90,7 @@
 
 ## GET /todos
 #### response get data || response 200
-  {
+>  {
     "result": [
       {
         "id": 34,
@@ -107,7 +107,7 @@
 ## GET /:id
 #### request params by id
 #### response get data by ID if ID founded || response 200
-  {
+>  {
     "result": {
       "id": 34,
       "title": "test title",
@@ -120,7 +120,7 @@
   }
 
 #### response get data by ID if ID not found || response 404
-  {
+>  {
     "result": {
       "msg": "data dengan id: 34 tidak ditemukan!"
     }
@@ -129,7 +129,7 @@
 ## PUT /:id
 #### request params by id
 #### request body 
-  {
+>  {
     "id": 34,
     "title": "test title2",
     "description": "test description2",
@@ -137,7 +137,7 @@
     "due_date": "2020-03-30T00:00:00.000Z",
   }
 #### response put ID if ID found || response 200
-  {
+>  {
     "result": {
       "title": "test title2",
       "description": "test description2",
@@ -146,14 +146,14 @@
     }
   }
 #### response put ID if ID not found || response 404
-  {
+>  {
     "errors": "not found!"
   }
 
 ## delete /:id
 #### request params by id
 #### response put ID if ID found || response 200
-  [
+>  [
     {
       "id": 34,
       "title": "test title2",
@@ -167,7 +167,7 @@
   ]
 
 #### response put ID if ID not found || response 404
-  {
+>  {
     "errors": {
       "notFound": "data with id: 4 not found"
     }
