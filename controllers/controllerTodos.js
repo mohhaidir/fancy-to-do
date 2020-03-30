@@ -63,6 +63,7 @@ class ControllerTodos {
           const msg = 'not found!'
           res.status(404).json(msg)
         } else {
+          // console.log(data)
           res.status(200).json(data)
         }
       })
@@ -80,7 +81,25 @@ class ControllerTodos {
   }
 
   static deleteTodosId(req, res) {
-
+    const id = Number(req.params.id)
+    let deletedData = null
+    Todos.findByPk(id)
+      .then(result => {
+        deletedData = result
+        if (result) {
+          return Todos.destroy({ where: { id: id } })
+        } else {
+          const notFound = 'data not found'
+          res.status(404).json(notFound)
+        }
+      })
+      .then(result2 => {
+        const deleted = [deletedData, 'data telah dihapus !']
+        res.status(200).json(deleted)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
   }
 }
 
