@@ -5,21 +5,13 @@ class ControllerTodos {
     const data = req.body
     Todos.create(data)
       .then(result => {
-        // console.log(result)
-        res.status(201).json(result)
+        res.status(201).json({ result })
       })
       .catch(err => {
         if (err.errors) {
-          // console.log(err)
-          const errorArgument = []
-          for (let i = 0; i < err.errors.length; i++) {
-            errorArgument.push(err.errors[i].message)
-          }
-          // console.log(errorArgument)
-          // console.log('masuk 400')
-          res.status(400).json(errorArgument)
+          res.status(400).json({ errors: err.errors })
         } else {
-          res.status(500).json(err)
+          res.status(500).json({ errors: err })
         }
       })
   }
@@ -27,11 +19,10 @@ class ControllerTodos {
   static getTodos(req, res) {
     Todos.findAll()
       .then(result => {
-        // console.log(result)
-        res.status(200).json(result)
+        res.status(200).json({ result: result })
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json({ errors: err })
       })
   }
 
@@ -43,39 +34,33 @@ class ControllerTodos {
           const notFound = {
             msg: `data dengan id: ${pk} tidak ditemukan!`
           }
-          res.status(404).json(notFound)
+          res.status(404).json({ result: notFound })
         } else {
-          res.status(200).json(result)
+          res.status(200).json({ result })
         }
       })
       .catch(err => {
-        res.status(404).json(err)
+        res.status(404).json({ err })
       })
   }
 
   static putTodosId(req, res) {
     const id = Number(req.params.id)
     const data = req.body
-    // console.log(id)
     Todos.update(data, { where: { id: id } })
       .then(result => {
         if (result[0] == 0) {
           const msg = 'not found!'
-          res.status(404).json(msg)
+          res.status(404).json({ errors: msg })
         } else {
-          // console.log(data)
-          res.status(200).json(data)
+          res.status(200).json({ result: data })
         }
       })
       .catch(err => {
-        if (err) {
-          const errorArgument = []
-          for (let i = 0; i < err.errors.length; i++) {
-            errorArgument.push(err.errors[i].message)
-          }
-          res.status(400).json(errorArgument)
+        if (err.errors) {
+          res.status(400).json({ errors: err.errors })
         } else {
-          res.status(500).json(err)
+          res.status(500).json({ errors: err })
         }
       })
   }
@@ -89,8 +74,8 @@ class ControllerTodos {
         if (result) {
           return Todos.destroy({ where: { id: id } })
         } else {
-          const notFound = 'data not found'
-          res.status(404).json(notFound)
+          const notFound = `data with id: ${id} not found`
+          res.status(404).json({ errors: { notFound } })
         }
       })
       .then(result2 => {
