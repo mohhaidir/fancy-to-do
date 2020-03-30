@@ -9,14 +9,14 @@ class ControllerTodos {
         res.status(201).json(result)
       })
       .catch(err => {
-        if (err) {
+        if (err.errors) {
           // console.log(err)
           const errorArgument = []
           for (let i = 0; i < err.errors.length; i++) {
             errorArgument.push(err.errors[i].message)
           }
-          // console.log('masuk error')
           // console.log(errorArgument)
+          // console.log('masuk 400')
           res.status(400).json(errorArgument)
         } else {
           res.status(500).json(err)
