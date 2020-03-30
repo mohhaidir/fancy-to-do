@@ -10,6 +10,7 @@ class ControllerTodos {
       })
       .catch(err => {
         if (err) {
+          // console.log(err)
           const errorArgument = []
           for (let i = 0; i < err.errors.length; i++) {
             errorArgument.push(err.errors[i].message)
@@ -35,7 +36,21 @@ class ControllerTodos {
   }
 
   static getTodosId(req, res) {
-
+    const pk = req.params.id
+    Todos.findByPk(pk)
+      .then(result => {
+        if (result == null) {
+          const notFound = {
+            msg: `data dengan id: ${pk} tidak ditemukan!`
+          }
+          res.status(404).json(notFound)
+        } else {
+          res.status(200).json(result)
+        }
+      })
+      .catch(err => {
+        res.status(404).json(err)
+      })
   }
 
   static putTodosId(req, res) {
