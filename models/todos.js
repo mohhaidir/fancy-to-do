@@ -38,14 +38,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     due_date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'date tidak boleh kosong'
+          msg: "date tidak boleh kosong!"
         },
         notNull: {
-          msg: 'date tidak boleh kosong'
+          msg: "date tidak boleh kosong!"
+        },
+        isDate: {
+          msg: "Date is date!"
         }
       }
     }
