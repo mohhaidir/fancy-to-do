@@ -1,6 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Todos = sequelize.define('Todos', {
+  const Model = sequelize.Sequelize.Model
+
+  class Todos extends Model { }
+
+  Todos.init({
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -53,8 +57,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, { sequelize });
+
+  // const Todos = sequelize.define('Todos', {
+  // })
+
   Todos.associate = function (models) {
     // associations can be defined here
+    Todos.belongsTo(models.Users, { foreignKey: 'userId' })
   };
   return Todos;
 };
