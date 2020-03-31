@@ -19,8 +19,9 @@ class ControllerTodos {
 
   static getTodos(req, res) {
     const userId = Number(req.dataUser.id)
-    Todos.findAll({ where: { userId: userId } })
+    Todos.findAll()
       .then(result => {
+        console.log('masuk sini')
         res.status(200).json({ result: result })
       })
       .catch(err => {
