@@ -6,7 +6,7 @@ function generateToken(data) {
     id: data.id,
     username: data.username,
     email: data.email
-  }, 'kepo')
+  }, process.env.JWT_TOKEN)
   return token
 }
 

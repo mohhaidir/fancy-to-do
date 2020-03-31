@@ -30,18 +30,11 @@ class ControllerUsers {
     let { email, password } = req.body;
     Users.findOne({ where: { email } })
       .then(result => {
-        if (result) {
-          return comparePassword(password, result.password)
-            .then(result => {
-              if (result) {
-                let token = generateToken(result)
-                res.status(200).json({ token })
-              } else {
-                throw { status: 400, msg: 'wrong password' }
-              }
-            })
+        if (result && comparePassword(password, result.password)) {
+          let token = generateToken(result)
+          res.status(200).json({ token })
         } else {
-          throw { status: 404, msg: 'wrong email' }
+          throw { status: 404, msg: 'something wrong, either email or password!' }
         }
       })
       .catch(err => {

@@ -4,7 +4,7 @@ class ControllerTodos {
   static postTodos(req, res) {
     const data = req.body
     data.userId = req.dataUser.id
-    console.log(req.dataUser)
+    // console.log(req.dataUser)
     Todos.create(data)
       .then(result => {
         res.status(201).json({ result })
