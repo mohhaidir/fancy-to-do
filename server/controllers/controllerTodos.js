@@ -4,12 +4,14 @@ class ControllerTodos {
   static postTodos(req, res) {
     const data = req.body
     data.userId = req.dataUser.id
+    // console.log(data, 'ini data=======')
     Todos.create(data)
       .then(result => {
         res.status(201).json({ result })
       })
       .catch(err => {
         if (err.errors) {
+          console.log(err)
           res.status(400).json({ errors: err.errors })
         } else {
           res.status(500).json({ errors: err })

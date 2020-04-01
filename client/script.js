@@ -3,6 +3,8 @@ var $registerForm = $('#registerForm')
 var $navLogin = $('#nav-login')
 var $navRegister = $('#nav-register')
 var $navLogout = $('#nav-logout')
+var $todosForm = $('#todosForm')
+var $getTodos = $('#getTodos')
 
 var url = 'http://localhost:3000'
 
@@ -25,6 +27,7 @@ $loginForm.on('submit', (e) => {
       $navLogin.hide()
       $navRegister.hide()
       $navLogout.show()
+      $todosForm.show()
     })
     .fail(err => {
       // console.log(err)
@@ -51,16 +54,63 @@ $registerForm.on('submit', (e) => {
       $navLogin.hide()
       $navRegister.hide()
       $navLogout.show()
+      $todosForm.show()
     })
     .fail(err => {
       // console.log(err)
     })
 })
 
+$todosForm.on('submit', (e) => {
+  e.preventDefault()
+  var $titleTodos = $('#title-todos').val()
+  var $descriptionTodos = $('#description-todos').val()
+  var $statusTodos = $('#status-todos').val()
+  var $dueDateTodos = $('#due-date-todos').val()
+
+  $.ajax({
+    method: 'POST',
+    url: `${url}/todos`,
+    data: {
+      title: $titleTodos,
+      description: $descriptionTodos,
+      status: $statusTodos,
+      due_date: $dueDateTodos
+    },
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  })
+    .done(response => {
+      localStorage.setItem('token', response.token)
+      $.ajax({
+        method: 'GET',
+        url: `${url}/todos`
+      })
+        .done(i => {
+          $('#tableTodos').append(`
+          <tr id="${i.id}">
+            <td>${i.title}</td>
+            <td>${i.description}</td>
+            <td>${i.status}</td>
+            <td>${i.due_date}</td>
+          </tr>
+        `)
+        })
+      $loginForm.hide()
+      $navLogin.hide()
+      $navRegister.hide()
+      $navLogout.show()
+      $todosForm.show()
+    })
+    .fail(err => {
+
+    })
+})
+
 function mainbody() {
 
 }
-
 
 function showLoginForm() {
   $loginForm.show()
@@ -72,10 +122,16 @@ function showRegisterForm() {
   $loginForm.hide()
 }
 
+function showTodosForm() {
+  $navLogin.hide()
+  $navRegister.hide()
+  $navLogout.show()
+}
+
 function logout() {
   localStorage.clear()
   $navLogin.show()
   $navRegister.show()
   $navLogout.hide()
-  showLoginForm()
+  $todosForm.hide()
 }

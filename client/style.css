@@ -5,3 +5,11 @@
 #nav-logout {
   display: none
 }
+
+#todosForm {
+  display: none
+}
+
+#tableTodos {
+  border: 1
+}
