@@ -5,6 +5,7 @@ var $navRegister = $('#nav-register')
 var $navLogout = $('#nav-logout')
 var $todosForm = $('#todosForm')
 var $getTodos = $('#getTodos')
+var $bottonAddTodo = $('#botton-add-todo')
 
 var url = 'http://localhost:3000'
 
@@ -28,6 +29,7 @@ $loginForm.on('submit', (e) => {
       $navRegister.hide()
       $navLogout.show()
       $todosForm.show()
+      getTodos()
     })
     .fail(err => {
       // console.log(err)
@@ -82,34 +84,38 @@ $todosForm.on('submit', (e) => {
     }
   })
     .done(response => {
-      localStorage.setItem('token', response.token)
-      $.ajax({
-        method: 'GET',
-        url: `${url}/todos`
-      })
-        .done(i => {
-          $('#tableTodos').append(`
-          <tr id="${i.id}">
-            <td>${i.title}</td>
-            <td>${i.description}</td>
-            <td>${i.status}</td>
-            <td>${i.due_date}</td>
-          </tr>
-        `)
-        })
       $loginForm.hide()
       $navLogin.hide()
       $navRegister.hide()
       $navLogout.show()
-      $todosForm.show()
+      getTodos()
     })
     .fail(err => {
 
     })
 })
 
-function mainbody() {
-
+function getTodos() {
+  $.ajax({
+    method: 'GET',
+    url: `${url}/todos`,
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  })
+    .done(data => {
+      $('#tableTodos').empty()
+      data.result.forEach(el => {
+        $('#tableTodos').append(`
+        <tr id="${el.id}">
+          <td>${el.title}</td>
+          <td>${el.description}</td>
+          <td>${el.status}</td>
+          <td>${el.due_date}</td>
+        </tr>
+        `)
+      })
+    })
 }
 
 function showLoginForm() {
@@ -120,6 +126,7 @@ function showLoginForm() {
 function showRegisterForm() {
   $registerForm.show()
   $loginForm.hide()
+  $bottonAddTodo.hide()
 }
 
 function showTodosForm() {
@@ -134,4 +141,5 @@ function logout() {
   $navRegister.show()
   $navLogout.hide()
   $todosForm.hide()
+  $('#tableTodos').empty()
 }
