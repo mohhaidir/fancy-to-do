@@ -86,10 +86,7 @@
   </div>
 
   <!-- add todos form -->
-  <div id="button-add-todo">
-    <button>Add Todo</button>
-  </div>
-  <div>
+  <div id="add-form-todos">
     <form id="todosForm" style="display: none">
       <div class="form-group">
         <label>Title:</label><br>
@@ -114,19 +111,24 @@
   <!-- list todos -->
   <div id="getTodos">
     <table id="tableTodos">
-      <thead>
+      <thead id="thead">
         <tr>
-          <th scope="col">ID</th>
           <th scope="col">Title</th>
           <th scope="col">Description</th>
           <th scope="col">Status</th>
           <th scope="col">Due Date</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
         <!-- get data -->
       </tbody>
     </table>
+  </div>
+
+  <!-- edit todos -->
+  <div id="edit-form-todos">
+
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
