@@ -6,7 +6,7 @@ We provide hourly historical weather data for cities via History API. Availabili
 https://openweathermap.org
 ```
 
-## ========================== [ - ENDPOINT - ] ==========================
+## ======================== [ - ENDPOINT - ] ========================
 ## POST /todos
 #### request body 
 ```
