@@ -278,6 +278,7 @@ function logout() {
   $todosForm.hide()
   $loginForm.show()
   $('#tableTodos').empty()
+  signOut()
 }
 
 function onSignIn(googleUser) {
@@ -332,4 +333,11 @@ const seeWeather = () => {
       `)
     }
   })
+}
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
 }
