@@ -7,7 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!-- <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"> -->
+
+  <!-- GOOGLE CLIENT -->
+  <meta name="google-signin-client_id"
+    content="634227851811-soe4pelba0njbvkocgh40udfgsp3lvlv.apps.googleusercontent.com">
+
   <link rel="stylesheet" type="text/css" href="style.css">
   <title>Document</title>
 </head>
@@ -23,10 +27,11 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" id="nav-login" onclick=showLoginForm()>Log In<span class="sr-only">(current)</span></a>
+            <a class="nav-link" id="nav-login" href="" onclick=showLoginForm()>Log In<span
+                class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="nav-register" onclick=showRegisterForm()>Register<span
+            <a class="nav-link" id="nav-register" href="" onclick=showRegisterForm()>Register<span
                 class="sr-only">(current)</span></a>
           </li>
         </ul>
@@ -44,7 +49,8 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" id="nav-logout" onclick=logout()>Log Out<span class="sr-only">(current)</span></a>
+            <a class="nav-link" id="nav-logout" href="" onclick=logout()>Log Out<span
+                class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
@@ -52,57 +58,56 @@
   </div>
 
   <!-- ini login -->
-  <div>
-    <form id="loginForm">
-      <div class="form-group">
-        <label>Email:</label><br>
-        <input id="email-login" type="email"><br>
-      </div>
-      <div class="form-group">
-        <label>Password:</label><br>
-        <input id="password-login" type="password">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+  <form id="loginForm">
+    <div class="form-group">
+      <label>Email:</label><br>
+      <input id="email-login" class="form-control" type="email"><br>
+    </div>
+    <div class="form-group">
+      <label>Password:</label><br>
+      <input id="password-login" class="form-control" type="password">
+    </div>
+    <div style="margin-left: 45%">
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+    <button type="submit" style="margin-left: 46.4%" class="btn btn-primary">Submit</button>
+  </form>
 
   <!-- ini register -->
-  <div>
-    <form id="registerForm">
-      <div class="form-group">
-        <label>Username:</label><br>
-        <input type="text" id="username-register"><br>
-      </div>
-      <div class="form-group">
-        <label>Email:</label><br>
-        <input type="email" id="email-register"><br>
-      </div>
-      <div class="form-group">
-        <label>Password:</label><br>
-        <input type="password" id="password-register">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+  <form id="registerForm">
+    <div class="form-group">
+      <label>Username:</label><br>
+      <input type="text" id="username-register"><br>
+    </div>
+    <div class="form-group">
+      <label>Email:</label><br>
+      <input type="email" id="email-register"><br>
+    </div>
+    <div class="form-group">
+      <label>Password:</label><br>
+      <input type="password" id="password-register">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 
   <!-- add todos form -->
   <div id="add-form-todos">
     <form id="todosForm" style="display: none">
       <div class="form-group">
         <label>Title:</label><br>
-        <input type="text" id="title-todos"><br>
+        <input type="text" class="form-control" id="title-todos"><br>
       </div>
       <div class="form-group">
         <label>Description:</label><br>
-        <input type="text" id="description-todos"><br>
+        <input type="text" class="form-control" id="description-todos"><br>
       </div>
       <div class="form-group">
         <label>Status:</label><br>
-        <input type="text" id="status-todos"><br>
+        <input type="text" class="form-control" id="status-todos"><br>
       </div>
       <div class="form-group">
         <label>Due Date:</label><br>
-        <input type="date" id="due-date-todos"><br>
+        <input type="date" class="form-control" id="due-date-todos"><br>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -110,7 +115,7 @@
 
   <!-- list todos -->
   <div id="getTodos">
-    <table id="tableTodos">
+    <table id="tableTodos" class="table">
       <thead id="thead">
         <tr>
           <th scope="col">Title</th>
@@ -133,7 +138,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="script.js"></script>
-  <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>

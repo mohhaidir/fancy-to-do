@@ -75,7 +75,7 @@ $registerForm.on('submit', (e) => {
       $navLogin.hide()
       $navRegister.hide()
       $navLogout.show()
-      $todosForm.show()
+      $todosForm.hide()
     })
     .fail(err => {
       // console.log(err)
@@ -133,11 +133,34 @@ function getTodos() {
           <td>${el.status}</td>
           <td>${el.due_date}</td>
           <td>
-            <button onclick=edit(${el.id})>Edit</button> <button onclick=delete(${el.id})>Delete</button>
+            <button onclick=edit(${el.id})>Edit</button>
+            <button onclick=hapus(${el.id})>Delete</button>
           </td>
         </tr>
         `)
       })
+    })
+}
+
+function hapus(id) {
+  $.ajax({
+    method: 'DELETE',
+    url: `${url}/todos/${id}`,
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  })
+    .done(response => {
+      $('#tableTodos tbody').empty()
+      getTodos()
+      $loginForm.hide()
+      $navLogin.hide()
+      $navRegister.hide()
+      $navLogout.show()
+      $todosForm.show()
+    })
+    .fail(err => {
+
     })
 }
 
@@ -156,8 +179,7 @@ function edit(id) {
       $('#edit-form-todos').append(`
         <form id="edit-form">
           <div class="form-group">
-            <label>ID:</label><br>
-            <input type="text" value="${data.result.id}" id="id-todos"><br>
+            <input type="hidden" value="${data.result.id}" id="id-todos"><br>
           </div>
           <div class="form-group">
             <label>Title:</label><br>
@@ -188,7 +210,6 @@ $('#edit-form').on('submit', (e) => {
   var $statusTodos = $('#status-todos').val()
   var $dueDateTodos = $('#due-date-todos').val()
   var id = $('#id-todos').val()
-  console.log(id, $titleTodos, $descriptionTodos, $statusTodos, $dueDateTodos)
   $.ajax({
     method: 'PUT',
     url: `${url}/todos/${id}`,
@@ -219,21 +240,20 @@ function showLoginForm() {
   $loginForm.show()
   $registerForm.hide()
   $todosForm.hide()
-  $getTodos.show()
 }
 
 function showRegisterForm() {
-  $registerForm.show()
   $loginForm.hide()
+  $registerForm.show()
   $todosForm.hide()
-  $getTodos.show()
 }
 
 function showTodosForm() {
   $navLogin.hide()
   $navRegister.hide()
-  $navLogout.show()
   $todosForm.hide()
+  getTodos()
+  $navLogout.show()
 }
 
 function logout() {
@@ -244,4 +264,28 @@ function logout() {
   $todosForm.hide()
   $loginForm.show()
   $('#tableTodos').empty()
+}
+
+function onSignIn(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  console.log(id_token)
+  $.ajax({
+    type: "POST",
+    url: `${url}/users/googleLogin`,
+    data: {
+      id_token
+    },
+    success: (response) => {
+      localStorage.setItem('token', response.token)
+      $loginForm.hide()
+      $navLogin.hide()
+      $navRegister.hide()
+      $navLogout.show()
+      getTodos()
+      $todosForm.show()
+    },
+    fail: (err) => {
+
+    }
+  })
 }
