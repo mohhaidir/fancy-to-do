@@ -18,6 +18,8 @@ $(document).ready(function () {
     $navLogout.show()
     $getTodos.show()
     getTodos()
+    $('#seeWeather').show()
+    seeWeather()
   } else {
     $loginForm.show()
     $navLogin.show()
@@ -25,6 +27,7 @@ $(document).ready(function () {
     $navLogout.hide()
     $todosForm.hide()
     $getTodos.hide()
+    $('#seeWeather').hide()
   }
 })
 
@@ -133,14 +136,23 @@ function getTodos() {
           <td>${el.status}</td>
           <td>${el.due_date}</td>
           <td>
-            <button onclick=edit(${el.id})>Edit</button>
-            <button onclick=hapus(${el.id})>Delete</button>
+            <button onclick=edit(${el.id}) class="btn btn-danger">Edit</button>
+            <button onclick=sebelumHapus(${el.id}) class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">Delete</button>
           </td>
         </tr>
         `)
       })
     })
 }
+
+function sebelumHapus(id) {
+  $('#tombol-confirm-delete').append(`
+    <div>
+      <button type="button" onclick=hapus(${id}) class="btn btn-primary">okay!</button>
+    </div>
+  `)
+}
+
 
 function hapus(id) {
   $.ajax({
@@ -158,6 +170,7 @@ function hapus(id) {
       $navRegister.hide()
       $navLogout.show()
       $todosForm.show()
+      $('#modalDelete').modal('hide')
     })
     .fail(err => {
 
@@ -254,6 +267,7 @@ function showTodosForm() {
   $todosForm.hide()
   getTodos()
   $navLogout.show()
+  $('#tableTodos').show()
 }
 
 function logout() {
@@ -286,6 +300,36 @@ function onSignIn(googleUser) {
     },
     fail: (err) => {
 
+    }
+  })
+}
+
+const seeWeather = () => {
+  let code = 'jakarta'
+  $.ajax({
+    method: 'GET',
+    url: `http://api.openweathermap.org/data/2.5/weather?q=${code}&appid=75b5b831f17bbb45ab72d5b025e69e5f`,
+    success: (data) => {
+      console.log(data)
+      $('#seeWeather').append(`
+        <div id="data">
+          <div id="country">
+            <td>Location: ${data.name} 📍</td>
+          </div>
+          <div id="weather">
+            <td>Weather: ${data.weather[0].description} &#x1F324</td>          
+          </div>
+          <div id="temperature">
+            <td>Temperature: ${(data.main.temp - 273).toFixed(0)} &#8451 &#x1F321</td>    
+          </div>
+          <div id="humidity">
+            <td>Humidity: ${data.main.humidity} 💧</td>
+          </div>
+          <div id="wind">
+            <td>Wind Speed: ${data.wind.speed} Kn 💨</td>
+          </div>
+        </div>
+      `)
     }
   })
 }

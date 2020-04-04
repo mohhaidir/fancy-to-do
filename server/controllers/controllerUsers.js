@@ -46,13 +46,17 @@ class ControllerUsers {
   }
 
   static googleLogin(req, res) {
+    // console.log('google controler')
+    // console.log(req.body)
     client.verifyIdToken({
       idToken: req.body.id_token,
       audience: process.env.CLIENT_ID
+      // Specify the CLIENT_ID of the app that accesses the backend
+      // Or, if multiple clients access the backend:
+      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
     })
       .then(ticket => {
-        console.log(ticket)
-        const payload = ticket.getPayLoad()
+        const payload = ticket.getPayload();
         // console.log(payload)
         Users.findOne({
           where: {
@@ -63,25 +67,25 @@ class ControllerUsers {
             if (data) {
               return data
             } else {
-              const obj = {
+              let obj = {
+                username: payload.name,
                 email: payload.email,
                 password: process.env.CLIENT_SECRET
               }
               return Users.create(obj)
             }
           })
-          .then(data2 => {
-            console.log('masuk generate')
-            if (data2) {
-              var token = generateToken(data2)
+          .then(data => {
+            if (data) {
+              var token = generateToken(data)
             }
             res.status(200).json({ token: token })
           })
           .catch(err => {
-            console.log('masuk catch')
             res.status(400).json(err)
           })
       })
+
   }
 }
 

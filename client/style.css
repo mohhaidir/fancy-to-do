@@ -13,3 +13,25 @@
 #tableTodos {
   border: 1
 }
+
+#seeWeather{
+  width: 1200px; 
+  border-radius: 20px;
+  height: 65px; 
+  background-color: #CFD8DC; 
+  padding: 20px 20px;
+  margin: auto;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+#data {
+  display: flex;
+  margin-left: 30px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#weather {
+  text-transform: capitalize;
+}
