@@ -1,4 +1,11 @@
 # fancy-to-do
+## Weather API
+
+We provide hourly historical weather data for cities via History API. Availability of hourly historical data depends on a type of your subscription. You can also download this data in JSON or CSV format - for details :
+```
+https://openweathermap.org
+```
+
 ## =================== [ - List of Routers - ] ===================
 ## POST /todos
 #### request body 
