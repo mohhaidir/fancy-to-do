@@ -203,7 +203,7 @@ function edit(id) {
     })
 }
 
-$('#edit-form').on('submit', (e) => {
+$('#edit-form').submit(function (e) {
   e.preventDefault()
   var $titleTodos = $('#title-todos').val()
   var $descriptionTodos = $('#description-todos').val()
