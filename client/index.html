@@ -229,14 +229,11 @@
         },
         error: (jqxhr, status, error) => {
           let errors = jqxhr.responseJSON
-          if (status) {
-            let errors = jqxhr.responseJSON
-            let arg = []
-            errors.errors.forEach(e => {
-              arg.push(e.message)
-            })
-            swal(`${arg.join(', ')} tidak boleh kosong!`, "Harap lengkapi semua data saat menambahkan todo!", "warning");
-          }
+          let arg = []
+          errors.errors.forEach(e => {
+            arg.push(e.message)
+          })
+          swal(`${arg.join(', ')} tidak boleh kosong!`, "Harap lengkapi semua data saat menambahkan todo!", "warning");
         }
       })
     }
