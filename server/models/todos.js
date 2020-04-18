@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'title tidak boleh kosong'
+          msg: 'title'
         },
         notNull: {
-          msg: 'title tidak boleh kosong'
+          msg: 'title'
         }
       }
     },
@@ -22,44 +22,34 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'desciption tidak boleh kosong'
+          msg: 'description'
         },
         notNull: {
-          msg: 'desciption tidak boleh kosong'
+          msg: 'description'
         }
       }
     },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'status tidak boleh kosong'
-        },
-        notNull: {
-          msg: 'status tidak boleh kosong'
-        }
-      }
-    },
+    status: DataTypes.STRING,
     due_date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: "date tidak boleh kosong!"
+          msg: "date!"
         },
         notNull: {
-          msg: "date tidak boleh kosong!"
-        },
-        isDate: {
-          msg: "Date is date!"
+          msg: "date!"
         }
       }
     }
-  }, { sequelize });
-
-  // const Todos = sequelize.define('Todos', {
-  // })
+  }, {
+    sequelize,
+    hooks: {
+      beforeCreate: (todos, option) => {
+        todos.status = 'Uncompleted';
+      }
+    }
+  });
 
   Todos.associate = function (models) {
     // associations can be defined here

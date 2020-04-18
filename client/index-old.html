@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- GOOGLE CLIENT -->
+  <meta name="google-signin-client_id"
+    content="634227851811-soe4pelba0njbvkocgh40udfgsp3lvlv.apps.googleusercontent.com">
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- ini navbar -->
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" id="nav-login" onclick=showLoginForm()>Log In<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="nav-register" onclick=showRegisterForm()>Register<span
+                class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- navbar logout -->
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" id="nav-logout" onclick=logout()>Log Out<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- weather -->
+  <div id="seeWeather">
+
+  </div>
+
+  <!-- ini login -->
+  <form id="loginForm">
+    <div class="form-group">
+      <label>Email:</label><br>
+      <input id="email-login" class="form-control" type="email"><br>
+    </div>
+    <div class="form-group">
+      <label>Password:</label><br>
+      <input id="password-login" class="form-control" type="password">
+    </div>
+    <div style="margin-left: 45%">
+      <div class="g-signin2" data-onsuccess="onSignIn"></div><br>
+    </div>
+    <button type="submit" style="margin-left: 46.4%" class="btn btn-primary">Submit</button>
+  </form>
+
+  <!-- ini register -->
+  <form id="registerForm">
+    <div class="form-group">
+      <label>Username:</label><br>
+      <input type="text" id="username-register" class="form-control"><br>
+    </div>
+    <div class="form-group">
+      <label>Email:</label><br>
+      <input type="email" id="email-register" class="form-control"><br>
+    </div>
+    <div class="form-group">
+      <label>Password:</label><br>
+      <input type="password" id="password-register" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <!-- add todos form -->
+  <div id="add-form-todos">
+    <form id="todosForm" style="display: none">
+      <div class="form-group">
+        <label>Title:</label><br>
+        <input type="text" class="form-control" id="title-todos"><br>
+      </div>
+      <div class="form-group">
+        <label>Description:</label><br>
+        <input type="text" class="form-control" id="description-todos"><br>
+      </div>
+      <div class="form-group">
+        <label>Status:</label><br>
+        <input type="text" class="form-control" id="status-todos"><br>
+      </div>
+      <div class="form-group">
+        <label>Due Date:</label><br>
+        <input type="date" class="form-control" id="due-date-todos"><br>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <!-- list todos -->
+  <div id="getTodos">
+    <table id="tableTodos" class="table">
+      <thead id="thead">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Status</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- get data -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- edit todos -->
+  <div id="edit-form-todos">
+
+  </div>
+
+  <!-- modal -->
+  <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div id="carrierID">
+
+    </div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          are you sure?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">no way!</button>
+          <div id="tombol-confirm-delete">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="script.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+
+
+
+</html>

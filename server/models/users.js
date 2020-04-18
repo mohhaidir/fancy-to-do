@@ -1,20 +1,37 @@
 'use strict';
-const hassPassword = require('../helpers/bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
+  const hassPassword = require('../helpers/bcrypt')
   const Model = sequelize.Sequelize.Model
-
   class Users extends Model { }
 
   Users.init({
     username: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'username'
+        }
+      }
     },
     email: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'email'
+        }
+      }
     },
     password: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'password'
+        }
+      }
     }
   }, {
     hooks: {
@@ -22,14 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         instance.password = hassPassword(instance.password)
       }
     }, sequelize
-  });
-
-  // const Users = sequelize.define('Users', {
-  // })
+  })
 
   Users.associate = function (models) {
     // associations can be defined here
     Users.hasMany(models.Todos, { foreignKey: 'userId' })
-  };
-  return Users;
-};
+  }
+  return Users
+}

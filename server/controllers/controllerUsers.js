@@ -1,47 +1,59 @@
+require('dotenv').config()
 const { Users } = require('../models')
 const generateToken = require('../helpers/generateToken')
 const comparePassword = require('../helpers/comparePassword')
-require('dotenv').config()
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 class ControllerUsers {
   static register(req, res, next) {
     const user = req.body
-    Users.create(user)
+    Users.findOne({
+      where: { email: req.body.email }
+    })
       .then(result => {
-        res.status(201).json({ result: result })
+        if (result) {
+          res.status(400).json({ msg: 'Email already taken' })
+        } else {
+          return Users.create(user)
+        }
+      })
+      .then(data => {
+        res.status(200).json(data)
       })
       .catch(err => {
-        if (err.errors) {
-          let errorArguments = []
-          err.errors.forEach(e => {
-            errorArguments.push({
-              type: e.type,
-              msg: e.message
-            })
-          });
-          next({ status: 400, errors })
-          res.status(400).json(error)
-        } else {
-          res.status(500)
-        }
+        next(err)
       })
   }
 
   static login(req, res, next) {
-    let { email, password } = req.body;
+    let { email, password } = req.body
+    let userFound = null
     Users.findOne({ where: { email } })
-      .then(result => {
-        if (result && comparePassword(password, result.password)) {
-          let token = generateToken(result)
-          res.status(200).json({ token })
+      .then(user => {
+        // console.log(user)
+        if (user) {
+          userFound = user
+          // console.log(comparePassword(password, user.password))
+          // console.log(password)
+          // console.log(user.password)
+          return comparePassword(password, user.password)
         } else {
-          throw { status: 404, msg: 'something wrong, either email or password!' }
+          throw { status: 404, msg: 'Email Not Found!' }
+        }
+      })
+      .then(result => {
+        if (result) {
+          let token = generateToken(userFound)
+          console.log(userFound.username)
+          res.status(200).json({ token, name: userFound.username })
+        } else {
+          console.log('masuk')
+          throw { status: 400, msg: 'Wrong Password!' }
         }
       })
       .catch(err => {
-        next(err)
+        next({ status: 500, msg: 'Internal Server Error!' })
       })
   }
 

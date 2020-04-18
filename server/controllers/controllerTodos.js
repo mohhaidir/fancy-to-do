@@ -11,7 +11,7 @@ class ControllerTodos {
       })
       .catch(err => {
         if (err.errors) {
-          console.log(err)
+          // console.log(err)
           res.status(400).json({ errors: err.errors })
         } else {
           res.status(500).json({ errors: err })
