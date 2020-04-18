@@ -106,7 +106,6 @@
       $("#submit-register").on("submit", function (event) {
         event.preventDefault()
         let $username = $("#register-username")
-        // let $last_name = $("#register-last_name")
         let $email = $("#register-email")
         let $password = $("#register-password")
         register($username.val(), $email.val(), $password.val())
@@ -130,11 +129,11 @@
           email: email,
           password: password
         }),
-        success: function (data2) {
+        success: (data) => {
           $("#register p").remove()
           $register.hide(300)
           $login.show(450)
-          swal("Register member baru sukses!", "silahkan login ulang!", "warning");
+          swal("Register member baru sukses!", "silahkan login ulang!", "success");
         },
         error: (jqxhr, status, error) => {
           $("#submit-register p").remove()
@@ -143,7 +142,7 @@
             let text = errors.join(', ')
             swal(`${text} salah!`, "", "warning");
           } else {
-            swal(`${errors.msg}`, "", "warning");
+            swal(`${errors.msg}!`, "", "warning");
           }
         }
       })
@@ -158,10 +157,10 @@
           email: email,
           password: password
         }),
-        success: function (data2) {
-          localStorage.setItem("token", data2.token)
+        success: function (data) {
+          localStorage.setItem("token", data.token)
           $("#login p").remove()
-          swal("Login Success!", `Selamat datang ${data2.name}`, "success");
+          swal("Login Success!", `Selamat datang ${data.name}`, "success");
           start()
         },
         error: (jqxhr, status, error) => {
@@ -190,7 +189,7 @@
                     <div style="display: flex; flex-direction: row">
                       <div style="width: 150px">
                         <span style="font-size: 15px">Status:</span><br>
-                        <span style="font-size: 18.5px; color: ${e.status === 'Uncomplete' ? 'rgb(255, 126, 126)' : e.status === 'On progress' ? '#bac94a' : 'black'}">${e.status}</span>
+                        <span style="font-size: 18.5px; color: ${e.status === 'Uncomplete' ? 'rgb(255, 126, 126)' : e.status === 'On progress' ? '#FBC02D' : '#bac94a'}">${e.status}</span>
                       </div>
                       <div>
                         <span style="font-size: 15px">Due date:</span><br>
@@ -228,7 +227,12 @@
           start()
         },
         error: (jqxhr, status, error) => {
-          console.log(jqxhr.responseJSON)
+          let errors = jqxhr.responseJSON
+          let arg = []
+          errors.errors.forEach(e => {
+            arg.push(e.message)
+          })
+          swal(`${arg.join(', ')} tidak boleh kosong!`, "Harap lengkapi semua data!", "warning");
         }
       })
     }
@@ -253,7 +257,7 @@
                 $todos.show(450)
               },
               error: (jqxhr, status, error) => {
-                console.log(jqxhr.responseJSON)
+                // console.log(jqxhr.responseJSON)
               }
             })
           } else {
@@ -330,11 +334,9 @@
         error: (jqxhr, status, error) => {
           let errors = jqxhr.responseJSON
           let arg = []
-
           errors.errors.forEach(e => {
             arg.push(e.message)
           })
-
           swal(`${arg.join(', ')} tidak boleh kosong!`, "", "warning");
         }
       })

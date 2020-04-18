@@ -35,10 +35,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: "date!"
+          msg: "date"
         },
         notNull: {
-          msg: "date!"
+          msg: "date"
         }
       }
     }

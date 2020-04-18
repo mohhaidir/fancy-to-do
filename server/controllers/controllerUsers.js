@@ -13,7 +13,7 @@ class ControllerUsers {
     })
       .then(result => {
         if (result) {
-          res.status(400).json({ msg: 'Email already taken' })
+          res.status(400).json({ msg: 'Email sudah terpakai' })
         } else {
           return Users.create(user)
         }
@@ -39,7 +39,7 @@ class ControllerUsers {
           // console.log(user.password)
           return comparePassword(password, user.password)
         } else {
-          throw { status: 404, msg: 'Email Not Found!' }
+          throw { status: 404, msg: 'Email tidak ditemukan!' }
         }
       })
       .then(result => {
@@ -49,7 +49,7 @@ class ControllerUsers {
           res.status(200).json({ token, name: userFound.username })
         } else {
           console.log('masuk')
-          throw { status: 400, msg: 'Wrong Password!' }
+          throw { status: 400, msg: 'Salah Password!' }
         }
       })
       .catch(err => {
