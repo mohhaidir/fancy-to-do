@@ -225,6 +225,7 @@
           $("#submit-add-todo")[0].reset()
           $("#add-todo").hide(300)
           start()
+          swal("Sukses!", `Berhasil menambahkan ${data.result.title}!`, "success");
         },
         error: (jqxhr, status, error) => {
           let errors = jqxhr.responseJSON
@@ -247,6 +248,7 @@
       })
         .then((willDelete) => {
           if (willDelete) {
+            console.log(willDelete, 'ini dari delete')
             $.ajax({
               url: `${baseUrl}/todos/${id}`,
               method: "DELETE",
@@ -255,6 +257,8 @@
                 $todos.hide(300)
                 getTodos()
                 $todos.show(450)
+                console.log(data[0])
+                swal("Berhasil!", `${data[0].title} telah dihapus!`, "success");
               },
               error: (jqxhr, status, error) => {
                 // console.log(jqxhr.responseJSON)
@@ -405,7 +409,7 @@
             }
           });
       })
-      $("#button-add-todo").on("click", function () {
+      $("#button-add-todo").on("click", function (data) {
         $addTodo.show(450)
         $editTodo.hide(200)
       })
