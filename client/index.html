@@ -189,7 +189,7 @@
                     <div style="display: flex; flex-direction: row">
                       <div style="width: 150px">
                         <span style="font-size: 15px">Status:</span><br>
-                        <span style="font-size: 18.5px; color: ${e.status === 'Uncomplete' ? 'rgb(255, 126, 126)' : e.status === 'On progress' ? '#FBC02D' : '#bac94a'}">${e.status}</span>
+                        <span style="font-size: 18.5px; color: ${e.status === 'Uncomplete' ? '#FF3D00' : e.status === 'On progress' ? '#FBC02D' : '#00BFA5'}">${e.status}</span>
                       </div>
                       <div>
                         <span style="font-size: 15px">Due date:</span><br>
@@ -224,16 +224,19 @@
         success: (data) => {
           $("#submit-add-todo")[0].reset()
           $("#add-todo").hide(300)
-          start()
           swal("Sukses!", `Berhasil menambahkan ${data.result.title}!`, "success");
+          start()
         },
         error: (jqxhr, status, error) => {
           let errors = jqxhr.responseJSON
-          let arg = []
-          errors.errors.forEach(e => {
-            arg.push(e.message)
-          })
-          swal(`${arg.join(', ')} tidak boleh kosong!`, "Harap lengkapi semua data!", "warning");
+          if (status) {
+            let errors = jqxhr.responseJSON
+            let arg = []
+            errors.errors.forEach(e => {
+              arg.push(e.message)
+            })
+            swal(`${arg.join(', ')} tidak boleh kosong!`, "Harap lengkapi semua data saat menambahkan todo!", "warning");
+          }
         }
       })
     }
@@ -248,7 +251,7 @@
       })
         .then((willDelete) => {
           if (willDelete) {
-            console.log(willDelete, 'ini dari delete')
+            // console.log(willDelete, 'ini dari delete')
             $.ajax({
               url: `${baseUrl}/todos/${id}`,
               method: "DELETE",
@@ -257,7 +260,6 @@
                 $todos.hide(300)
                 getTodos()
                 $todos.show(450)
-                console.log(data[0])
                 swal("Berhasil!", `${data[0].title} telah dihapus!`, "success");
               },
               error: (jqxhr, status, error) => {
@@ -334,6 +336,7 @@
           $todos.hide(300)
           getTodos()
           $todos.show(450)
+          swal("Sukses!", `Berhasil mengubah data!`, "success");
         },
         error: (jqxhr, status, error) => {
           let errors = jqxhr.responseJSON

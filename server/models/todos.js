@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     hooks: {
       beforeCreate: (todos, option) => {
-        todos.status = 'Uncompleted';
+        todos.status = 'Uncomplete';
       }
     }
   });
