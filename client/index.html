@@ -98,6 +98,7 @@
     if (localStorage.token) {
       start()
     } else {
+      seeWeather()
       $("#button-add-todo").hide()
       $(".logout").hide()
       $("#button-login").on("click", function () {
@@ -383,7 +384,7 @@
     })
 
     function start() {
-      seeWeather()
+      $("#seeWeather").hide()
       getTodos()
       $(".todos").show(450)
       $("#button-add-todo").show()
@@ -410,7 +411,8 @@
               $(".todos").hide()
               $(".logout").hide()
               $("#button-add-todo").hide()
-              $('#seeWeather').hide()
+              seeWeather()
+              $("#seeWeather").show()
             } else {
               swal("OK!");
             }
