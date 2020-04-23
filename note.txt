@@ -4,7 +4,7 @@ register
 -pindah ke client register gagal(karena ada href) (DONE)
 -client register tidak kembalikan token, tetapi langsung pindah ke main page (DONE)
 -server register unique email (DONE)
--server register tidak check email / password kosong 
+-server register tidak check email / password kosong (DONE)
 -server tidak check password (DONE)
 
 login
