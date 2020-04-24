@@ -1,0 +1,17 @@
+haidir
+
+register
+-pindah ke client register gagal(karena ada href) (DONE)
+-client register tidak kembalikan token, tetapi langsung pindah ke main page (DONE)
+-server register unique email (DONE)
+-server register tidak check email / password kosong (DONE)
+-server tidak check password (DONE)
+
+login
+-compare password gagal(harusnya pake compareSync) (DONE)
+-server error message kurang deskriptif(login) (DONE)
+-setelah login harus refresh untuk get data (DONE)
+
+edit
+-edit page client masih gagal (DONE)
+-client tidak ada success / error message (DONE)
